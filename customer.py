@@ -33,30 +33,12 @@ class Customer:
         Returns:
             [tuple]: amount (cost of a rental: int/float), rental_point (reward points: int).
         """
-        renter_points = 0
-        amount = 0
-        if rental.get_movie().get_price_code() == Movie.REGULAR:
-            # Two days for $2, additional days 1.50 each.
-            amount = 2.0
-            if rental.get_days_rented() > 2:
-                amount += 1.5*(rental.get_days_rented()-2)
-        elif rental.get_movie().get_price_code() == Movie.CHILDRENS:
-            # Three days for $1.50, additional days 1.50 each.
-            amount = 1.5
-            if rental.get_days_rented() > 3:
-                amount += 1.5*(rental.get_days_rented()-3)
-        elif rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-            # Straight per day charge
-            amount = 3*rental.get_days_rented()
-        else:
-            log = logging.getLogger()
-            log.error(
-                f"Movie {rental.get_movie()} has unrecognized priceCode {rental.get_movie().get_price_code()}")
+        amount = rental.get_price()
         # award renter points
         if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-            renter_points += rental.get_days_rented()
+            renter_points = rental.days_rented
         else:
-            renter_points += 1
+            renter_points = 1
         return amount, renter_points
 
     def statement(self):
@@ -74,13 +56,13 @@ class Customer:
         fmt = "{:32s}   {:4d} {:6.2f}\n"
 
         for rental in self.rentals:
-            amount, rental_point = self.billing(rental)
+            amount, renter_points = self.billing(rental)
             #  add detail line to statement
             statement += fmt.format(rental.get_movie().get_title(),
                                     rental.get_days_rented(), amount)
             # and accumulate activity
             total_amount += amount
-            frequent_renter_points += rental_point
+            frequent_renter_points += renter_points
 
         # footer: summary of charges
         statement += "\n"
