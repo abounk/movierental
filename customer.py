@@ -23,20 +23,6 @@ class Customer:
     def get_name(self):
         return self.name
 
-    def billing(self, rental):
-        """ Calculate reward points and price for
-            each rental.
-
-        Args:
-            rental (Rental): an object of customer's rental.
-
-        Returns:
-            [tuple]: amount (cost of a rental: float), rental_point (reward points: int).
-        """
-        amount = rental.get_price()
-        renter_points = rental.get_renter_point()
-        return amount, renter_points
-
     def statement(self):
         """
             Print all the rentals in current period, 
@@ -52,7 +38,7 @@ class Customer:
         fmt = "{:32s}   {:4d} {:6.2f}\n"
 
         for rental in self.rentals:
-            amount, renter_points = self.billing(rental)
+            amount, renter_points = rental.get_price(), rental.get_renter_point()
             #  add detail line to statement
             statement += fmt.format(rental.get_movie().get_title(),
                                     rental.get_days_rented(), amount)
