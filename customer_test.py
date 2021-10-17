@@ -2,7 +2,7 @@ import re
 import unittest
 from customer import Customer
 from rental import Rental
-from movie import Movie
+from movie import Movie, PriceCode
 
 
 class CustomerTest(unittest.TestCase):
@@ -15,9 +15,9 @@ class CustomerTest(unittest.TestCase):
         movies = list of some movies
         """
         self.c = Customer("Movie Mogul")
-        self.new_movie = Movie("Mulan", Movie.NEW_RELEASE)
-        self.regular_movie = Movie("CitizenFour", Movie.REGULAR)
-        self.childrens_movie = Movie("Frozen", Movie.CHILDRENS)
+        self.new_movie = Movie("Mulan", PriceCode.new_release)
+        self.regular_movie = Movie("CitizenFour", PriceCode.regular)
+        self.childrens_movie = Movie("Frozen", PriceCode.childrens)
 
     def test_billing(self):
         """ Test rental billing """
@@ -37,10 +37,10 @@ class CustomerTest(unittest.TestCase):
         childrens_2 = Rental(self.childrens_movie, 2)
         amount_5, point_5 = self.c.billing(childrens_2)
 
-        self.assertEqual((9, 3), (amount_1, point_1))
-        self.assertEqual((3.5, 1), (amount_2, point_2))
+        self.assertEqual((9.0, 3), (amount_1, point_1))
+        self.assertEqual((1.5, 1), (amount_2, point_2))
         self.assertEqual((2.0, 1), (amount_3, point_3))
-        self.assertEqual((3.0, 1), (amount_4, point_4))
+        self.assertEqual((1.5, 1), (amount_4, point_4))
         self.assertEqual((1.5, 1), (amount_5, point_5))
 
     def test_statement(self):

@@ -31,14 +31,10 @@ class Customer:
             rental (Rental): an object of customer's rental.
 
         Returns:
-            [tuple]: amount (cost of a rental: int/float), rental_point (reward points: int).
+            [tuple]: amount (cost of a rental: float), rental_point (reward points: int).
         """
         amount = rental.get_price()
-        # award renter points
-        if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-            renter_points = rental.days_rented
-        else:
-            renter_points = 1
+        renter_points = rental.get_renter_point()
         return amount, renter_points
 
     def statement(self):
