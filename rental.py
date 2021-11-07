@@ -20,20 +20,17 @@ class Rental:
         self.movie = movie
         self.days_rented = days_rented
 
-    def get_movie(self):
+    def get_title(self):
         return self.movie
 
-    def get_days_rented(self):
-        return self.days_rented
-
-    def get_price(self):
+    def get_charge(self):
         """ Calculate price for each rental.
         """
-        amount = self.movie.get_price_code().get_price(self.days_rented)
+        amount = self.movie.get_price_code().price(self.days_rented)
         return amount
 
-    def get_renter_point(self):
-        """ Calculate reward points for each rental 
+    def get_rental_points(self):
+        """ Calculate reward points for each rental.
         """
-        point = self.movie.get_price_code().get_renter_point(self.days_rented)
+        point = self.movie.get_price_code().frequent_rental_point(self.days_rented)
         return point

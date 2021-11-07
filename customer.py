@@ -20,8 +20,11 @@ class Customer:
         if rental not in self.rentals:
             self.rentals.append(rental)
 
-    def get_name(self):
-        return self.name
+    def compute_rental_points(self, rental):
+        return rental.get_rental_points()
+
+    def compute_total_charge(self, rental):
+        return rental.get_charge()
 
     def statement(self):
         """
@@ -38,10 +41,11 @@ class Customer:
         fmt = "{:32s}   {:4d} {:6.2f}\n"
 
         for rental in self.rentals:
-            amount, renter_points = rental.get_price(), rental.get_renter_point()
+            amount, renter_points = self.compute_total_charge(
+                rental), self.compute_rental_points(rental)
             #  add detail line to statement
-            statement += fmt.format(rental.get_movie().get_title(),
-                                    rental.get_days_rented(), amount)
+            statement += fmt.format(rental.get_title().get_title(),
+                                    rental.days_rented, amount)
             # and accumulate activity
             total_amount += amount
             frequent_renter_points += renter_points

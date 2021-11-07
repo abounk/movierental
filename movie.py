@@ -13,12 +13,12 @@ class PriceCode(Enum):
                  "frp": lambda days: 1
                  }
 
-    def get_renter_point(self, days: int) -> int:
+    def frequent_rental_point(self, days: int) -> int:
         """Return the renter points for a given number of days"""
         point = self.value["frp"]    # the enum member's price formula
         return point(days)
 
-    def get_price(self, days: int) -> float:
+    def price(self, days: int) -> float:
         "Return the rental price for a given number of days"""
         pricing = self.value["price"]    # the enum member's price formula
         return pricing(days)
