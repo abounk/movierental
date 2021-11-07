@@ -13,15 +13,16 @@ class Rental:
     field is used.
     """
 
-    def __init__(self, movie, days_rented):
+    def __init__(self, movie, days_rented, price_code):
         """Initialize a new movie rental object for
            a movie with known rental period (daysRented).
         """
         self.movie = movie
         self.days_rented = days_rented
+        self.movie.set_price_code(price_code)
 
     def get_title(self):
-        return self.movie
+        return self.movie.get_title()
 
     def get_charge(self):
         """ Calculate price for each rental.
