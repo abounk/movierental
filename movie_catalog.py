@@ -2,7 +2,7 @@ import csv
 from movie import Movie
 
 
-class MovieCategory:
+class MovieCatalog:
 
     def __init__(self):
         self.filename = 'movies.csv'
