@@ -13,7 +13,7 @@ class Rental:
     field is used.
     """
 
-    def __init__(self, movie, days_rented, price_code):
+    def __init__(self, movie: Movie, days_rented, price_code):
         """Initialize a new movie rental object for
            a movie with known rental period (daysRented).
         """

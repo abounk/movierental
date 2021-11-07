@@ -44,7 +44,7 @@ class Customer:
             amount, renter_points = self.compute_total_charge(
                 rental), self.compute_rental_points(rental)
             #  add detail line to statement
-            statement += fmt.format(rental.get_title().get_title(),
+            statement += fmt.format(rental.get_title(),
                                     rental.days_rented, amount)
             # and accumulate activity
             total_amount += amount

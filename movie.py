@@ -1,5 +1,4 @@
 from enum import Enum
-from movie_catalog import MovieCatalog
 
 from datetime import datetime
 
@@ -30,9 +29,9 @@ class PriceCode(Enum):
     def for_movie(movie):
         new_release = movie.get_year() == str(datetime.now().year)
         children = 'Children' in movie.get_genre()
-        if children:
+        if new_release:
             return PriceCode.childrens
-        elif new_release:
+        elif children:
             return PriceCode.new_release
         return PriceCode.regular
 
@@ -45,7 +44,7 @@ class Movie:
     def __init__(self, title, year, genre):
         # Initialize a new movie.
         self.__title = title
-        self.__price_code = 0
+        self.__price_code = ""
         self.__year = year
         self.__genre = genre
 
