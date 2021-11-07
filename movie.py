@@ -1,4 +1,7 @@
 from enum import Enum
+from movie_catalog import MovieCatalog
+
+from datetime import datetime
 
 
 class PriceCode(Enum):
@@ -22,6 +25,16 @@ class PriceCode(Enum):
         "Return the rental price for a given number of days"""
         pricing = self.value["price"]    # the enum member's price formula
         return pricing(days)
+
+    @staticmethod
+    def for_movie(movie):
+        new_release = movie.get_year() == str(datetime.now().year)
+        children = 'Children' in movie.get_genre()
+        if children:
+            return PriceCode.childrens
+        elif new_release:
+            return PriceCode.new_release
+        return PriceCode.regular
 
 
 class Movie:
