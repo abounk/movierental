@@ -5,7 +5,7 @@ from datetime import datetime
 
 class PriceCode(Enum):
     """An enumeration for different kinds of movies and their behavior"""
-    new_release = {"price": lambda days: 3.0*days,
+    new_release = {"price": lambda days: 3.0 * days,
                    "frp": lambda days: days
                    }
     regular = {"price": lambda days: (1.5 * (days - 2)) if days > 2 else 2.0,
@@ -27,13 +27,13 @@ class PriceCode(Enum):
 
     @staticmethod
     def for_movie(movie):
-        new_release = movie.get_year() == str(datetime.now().year)
-        children = 'Children' in movie.get_genre()
-        if new_release:
-            return PriceCode.childrens
-        elif children:
+        current_year = datetime.now().year
+        if movie.get_year() == current_year:
             return PriceCode.new_release
-        return PriceCode.regular
+        elif "Children" in movie.get_genre():
+            return PriceCode.childrens
+        else:
+            return PriceCode.regular
 
 
 class Movie:
