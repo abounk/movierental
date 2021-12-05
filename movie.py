@@ -42,14 +42,12 @@ class Movie:
     """
 
     def __init__(self, title, year, genre):
-        # Initialize a new movie.
         self.__title = title
         self.__price_code = ""
         self.__year = year
         self.__genre = genre
 
     def get_price_code(self):
-        # get the price code
         return self.__price_code
 
     def set_price_code(self, value):
