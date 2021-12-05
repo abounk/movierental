@@ -20,11 +20,17 @@ class Customer:
         if rental not in self.rentals:
             self.rentals.append(rental)
 
-    def compute_rental_points(self, rental):
-        return rental.get_rental_points()
+    def compute_rental_points(self) -> int:
+        total_point = 0
+        for rental in self.rentals:
+            total_point += rental.get_rental_points()
+        return total_point
 
-    def compute_total_charge(self, rental):
-        return rental.get_charge()
+    def compute_total_charge(self) -> int:
+        total_charge = 0
+        for rental in self.rentals:
+            total_charge += rental.get_charge()
+        return total_charge
 
     def statement(self):
         """
@@ -33,29 +39,23 @@ class Customer:
             Returns:
                 the statement as a String
         """
-        total_amount = 0  # total charges
-        frequent_renter_points = 0
         statement = f"Rental Report for {self.name}\n\n"
         fmt = "{:32s}    {:4s} {:6s}\n"
         statement += fmt.format("Movie Title", "Days", "Price")
         fmt = "{:32s}   {:4d} {:6.2f}\n"
 
         for rental in self.rentals:
-            amount, renter_points = self.compute_total_charge(
-                rental), self.compute_rental_points(rental)
-            #  add detail line to statement
             statement += fmt.format(rental.get_title(),
-                                    rental.days_rented, amount)
-            # and accumulate activity
-            total_amount += amount
-            frequent_renter_points += renter_points
+                                    rental.days_rented,
+                                    rental.get_charge()
+                                    )
 
         # footer: summary of charges
         statement += "\n"
         statement += "{:32s} {:6s} {:6.2f}\n".format(
-            "Total Charges", "", total_amount)
+            "Total Charges", "", self.compute_total_charge())
         statement += "Frequent Renter Points earned: {}\n".format(
-            frequent_renter_points)
+            self.compute_rental_points())
 
         return statement
 
