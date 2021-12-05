@@ -2,8 +2,9 @@ import re
 import unittest
 from customer import Customer
 from rental import Rental
-from movie import Movie, PriceCode
-from movie_catalog import MovieCatalog
+from movie import Movie
+
+from datetime import datetime
 
 
 class CustomerTest(unittest.TestCase):
@@ -15,12 +16,11 @@ class CustomerTest(unittest.TestCase):
         c = a customer
         movies = list of some movies
         """
-        self.movie_catalog = MovieCatalog()
+        current_year = datetime.now().year
         self.c = Customer("Movie Mogul")
-        self.new_movie = self.movie_catalog.get_movie("Mulan")
-        self.regular_movie = self.movie_catalog.get_movie("Hacksaw Ridge")
-        self.childrens_movie = self.movie_catalog.get_movie(
-            "Weathering With You")
+        self.new_movie = Movie("Mulan", current_year, [])
+        self.regular_movie = Movie("CitizenFour", current_year-1, [])
+        self.childrens_movie = Movie("Frozen", current_year-1, ["Children"])
 
     @unittest.skip("No convenient way to test")
     def test_billing():
@@ -38,7 +38,7 @@ class CustomerTest(unittest.TestCase):
         self.assertEqual("0.00", matches[1])
         # add a rental
         self.c.add_rental(
-            Rental(self.new_movie, 4, PriceCode.new_release))  # days
+            Rental(self.new_movie, 4))  # days
         stmt = self.c.statement()
         matches = re.match(pattern, stmt.replace('\n', ''), flags=re.DOTALL)
         self.assertIsNotNone(matches)
