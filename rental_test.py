@@ -1,9 +1,7 @@
 from datetime import datetime
 import unittest
-from customer import Customer
 from rental import Rental
-from movie import Movie, PriceCode
-from movie_catalog import MovieCatalog
+from movie import Movie
 
 
 class RentalTest(unittest.TestCase):
